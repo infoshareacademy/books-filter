@@ -4,8 +4,10 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Utils\BookFilter;
 
 class DefaultController extends Controller
 {
@@ -14,9 +16,10 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-
         $result = $this->callApi('GET', 'http://localhost:8080/books/');
-        return new Response($result);
+        $bookfilter = new BookFilter();
+        $filteredOutBooks = $bookfilter->filter(json_decode($result)->item,['wyboru']);
+        return new JsonResponse($filteredOutBooks);
     }
 
     private function callApi($method, $url, $data = false)
