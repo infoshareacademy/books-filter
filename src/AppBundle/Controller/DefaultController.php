@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Utils\PrettyJsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,6 +32,9 @@ class DefaultController extends Controller
         }
         //Returning array of filteres items
         $filteredOutBooks = $bookfilter->filter($decodedJson->item,['wyboru']);
+        if ($request->get('format') == 'pretty'){
+            return new PrettyJsonResponse($filteredOutBooks);
+        }
         return new JsonResponse($filteredOutBooks);
     }
 
