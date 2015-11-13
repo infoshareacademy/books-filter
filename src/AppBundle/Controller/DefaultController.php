@@ -18,7 +18,11 @@ class DefaultController extends Controller
     {
         $result = $this->callApi('GET', $this->container->getParameter('api_url'));
         $bookfilter = new BookFilter();
-        $filteredOutBooks = $bookfilter->filter(json_decode($result)->item,['wyboru']);
+        $decodedJson = json_decode($result);
+        if ($decodedJson === null || property_exists($decodedJson, 'item')){
+            return new JsonResponse(['error' => 'niepoprawny format']);
+        }
+        $filteredOutBooks = $bookfilter->filter($decodedJson->item,['wyboru']);
         return new JsonResponse($filteredOutBooks);
     }
 
