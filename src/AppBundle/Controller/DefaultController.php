@@ -18,7 +18,7 @@ class DefaultController extends Controller
     {
         $result = $this->callApi('GET', 'http://localhost:8080/books/');
         $bookfilter = new BookFilter();
-        $filteredOutBooks = $bookfilter->filter(json_decode($result)->item,['wyboru']);
+        $filteredOutBooks = $bookfilter->filter(json_decode($result)->item,['Word', 'Access', 'Android']);
         return new JsonResponse($filteredOutBooks);
     }
 
