@@ -16,7 +16,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $result = $this->callApi('GET', 'http://localhost:8080/books/');
+        $result = $this->callApi('GET', $this->container->getParameter('api_url'));
         $bookfilter = new BookFilter();
         $filteredOutBooks = $bookfilter->filter(json_decode($result)->item,['wyboru']);
         return new JsonResponse($filteredOutBooks);
