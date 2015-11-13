@@ -33,7 +33,7 @@ class DefaultController extends Controller
         //Creating new instance of BookFilter class
         $bookfilter = new BookFilter();
         //Returning array of filteres items
-        $filteredOutBooks = $bookfilter->filter($decodedJson->item,['Word', 'Access']);
+        $filteredOutBooks = $bookfilter->filter($decodedJson->item,$request->get('keywords'));
         if ($request->get('format') == 'pretty'){
             return new PrettyJsonResponse($filteredOutBooks);
         }
