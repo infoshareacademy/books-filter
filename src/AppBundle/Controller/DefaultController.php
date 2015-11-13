@@ -16,10 +16,12 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $logger = $this->get('logger');
         $result = $this->callApi('GET', $this->container->getParameter('api_url'));
         $bookfilter = new BookFilter();
         $decodedJson = json_decode($result);
         if ($decodedJson === null || property_exists($decodedJson, 'item')){
+            $logger->error('niepoprawny format danych');
             return new JsonResponse(['error' => 'niepoprawny format']);
         }
         $filteredOutBooks = $bookfilter->filter($decodedJson->item,['wyboru']);
