@@ -16,11 +16,18 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        //Writes logs to app/logs/dev.log available through app_dev.php
         $logger = $this->get('logger');
+        //Calling books api for json file; url config placed in parameters.yml
         $result = $this->callApi('GET', $this->container->getParameter('api_url'));
+//        var_dump($result);
+        //Creating new instance of BookFilter class
         $bookfilter = new BookFilter();
+//      var_dump($bookfilter);
+        //Takes a JSON encoded string and converts it into PHP object of arrays"
         $decodedJson = json_decode($result);
-        if ($decodedJson === null || property_exists($decodedJson, 'item')){
+//        var_dump($decodedJson);
+        if ($decodedJson === null || !property_exists($decodedJson, 'item')){
             $logger->error('niepoprawny format danych');
             return new JsonResponse(['error' => 'niepoprawny format']);
         }
