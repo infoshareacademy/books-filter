@@ -8,7 +8,7 @@ class BookFilter
             $filteredBooks = [];
             foreach ($booksToFilter as $book){
                 foreach ($keywords as $keyword){
-                    if (strpos($book->itemTitle, $keyword)!==false){
+                    if (strripos($book->itemTitle, $keyword)!==false){
                         $filteredBooks[] = new Ebook($book->itemId, $book->itemTitle);
                     }
                 }

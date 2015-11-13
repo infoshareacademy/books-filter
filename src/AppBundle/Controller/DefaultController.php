@@ -20,17 +20,16 @@ class DefaultController extends Controller
         $logger = $this->get('logger');
         //Calling books api for json file; url config placed in parameters.yml
         $result = $this->callApi('GET', $this->container->getParameter('api_url'));
-//        var_dump($result);
         //Creating new instance of BookFilter class
         $bookfilter = new BookFilter();
-//      var_dump($bookfilter);
         //Takes a JSON encoded string and converts it into PHP object of arrays"
         $decodedJson = json_decode($result);
-//        var_dump($decodedJson);
+        //Checking if response is proper JSON or doesn`t have item property though is not a JSON
         if ($decodedJson === null || !property_exists($decodedJson, 'item')){
             $logger->error('niepoprawny format danych');
             return new JsonResponse(['error' => 'niepoprawny format']);
         }
+        //Returning array of filteres items
         $filteredOutBooks = $bookfilter->filter($decodedJson->item,['wyboru']);
         return new JsonResponse($filteredOutBooks);
     }
