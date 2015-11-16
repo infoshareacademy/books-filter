@@ -19,5 +19,5 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
     #link to books api
-    api_url: http://books-collector.infoshareaca.nazwa.pl/
+    api_url: http://test.books-collector.infoshareaca.nazwa.pl/
 
