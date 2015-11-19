@@ -13,7 +13,8 @@ class BookFilter
                             $filteredBooks[] = new Ebook(
                                 $book->itemId, $book->itemTitle,
                                 $book->priceInfo->item[0]->priceValue,
-                                $book->timeToEnd
+                                $book->timeToEnd,
+                                $book->photosInfo->item[2]->photoUrl
                             );
                         }
                     }

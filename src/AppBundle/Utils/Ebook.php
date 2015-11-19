@@ -15,17 +15,19 @@ class Ebook
     public $itemTitle;
     public $priceValue;
     public $timeToEnd;
+    public $photoUrl;
 
     /**
      * Ebook constructor.
      * @param $itemId
      * @param $itemTitle
      */
-    public function __construct($itemId, $itemTitle,$priceValue,$timeToEnd)
+    public function __construct($itemId, $itemTitle,$priceValue,$timeToEnd,$photoUrl)
     {
         $this->itemId = $itemId;
         $this->itemTitle = $itemTitle;
         $this->priceValue = $priceValue;
         $this->timeToEnd = $timeToEnd;
+        $this->photoUrl = $photoUrl;
     }
 }

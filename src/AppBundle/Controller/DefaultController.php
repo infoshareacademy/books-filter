@@ -20,8 +20,10 @@ class DefaultController extends Controller
     {
         //Writes logs to app/logs/dev.log available through app_dev.php
         $logger = $this->get('logger');
+
         //Calling books api for json file; url config placed in parameters.yml
         $result = (new ApiCaller())->callApi('GET', $this->container->getParameter('api_url'));
+//        var_dump($result);
 
         //Takes a JSON encoded string and converts it into PHP object of arrays"
         $decodedJson = json_decode($result);
@@ -35,8 +37,8 @@ class DefaultController extends Controller
         //Returning array of filteres items
         $filteredOutBooks = $bookfilter->filter($decodedJson->item,$request->get('keywords'));
         if ($request->get('format') == 'pretty'){
-            return new PrettyJsonResponse($filteredOutBooks);
+            return new PrettyJsonResponse($filteredOutBooks,200, array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
         }
-        return new JsonResponse($filteredOutBooks);
+        return new JsonResponse($filteredOutBooks,200, array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
     }
 }
