@@ -27,6 +27,7 @@ class DefaultController extends Controller
 
         //Takes a JSON encoded string and converts it into PHP object of arrays"
         $decodedJson = json_decode($result);
+
         //Checking if response is proper JSON or doesn`t have item property though is not a JSON
         if ($decodedJson === null || !property_exists($decodedJson, 'item')){
             $logger->error('niepoprawny format danych');
@@ -35,7 +36,11 @@ class DefaultController extends Controller
         //Creating new instance of BookFilter class
         $bookfilter = new BookFilter();
         //Returning array of filteres items
-        $filteredOutBooks = $bookfilter->filter($decodedJson->item,$request->get('keywords'));
+        if(!$request->get('keywords')) {
+            $filteredOutBooks = $decodedJson->item;
+        } else {
+            $filteredOutBooks = $bookfilter->filter($decodedJson->item,$request->get('keywords'));
+        }
         if ($request->get('format') == 'pretty'){
             return new PrettyJsonResponse($filteredOutBooks,200, array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
         }
