@@ -36,11 +36,15 @@ class DefaultController extends Controller
         //Creating new instance of BookFilter class
         $bookfilter = new BookFilter();
         //Returning array of filteres items
-        if(!$request->get('keywords')) {
-            $filteredOutBooks = $decodedJson->item;
+        if($request->get('keywords')) {
+            $keywords = $request->get('keywords');
         } else {
-            $filteredOutBooks = $bookfilter->filter($decodedJson->item,$request->get('keywords'));
+            $keywords = false;
         }
+
+
+        $filteredOutBooks = $bookfilter->filter($decodedJson->item,$keywords);
+
         if ($request->get('format') == 'pretty'){
             return new PrettyJsonResponse($filteredOutBooks,200, array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
         }
